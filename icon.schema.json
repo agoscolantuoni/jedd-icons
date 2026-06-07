@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Jedd Icons Metadata Schema",
+  "description": "A JSON schema for validating the metadata of icons in the Jedd icon set.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "contributors", "tags", "categories"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "contributors": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1
+    },
+    "categories": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "arrows",
+          "charts",
+          "communication",
+          "design",
+          "devices",
+          "files",
+          "layout",
+          "media",
+          "navigation",
+          "shapes",
+          "social",
+          "text",
+          "time",
+          "tools",
+          "weather"
+        ]
+      }
+    },
+    "aliases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name"],
+        "properties": {
+          "name": { "type": "string" },
+          "deprecated": { "type": "boolean" }
+        }
+      }
+    },
+    "deprecated": { "type": "boolean", "const": true },
+    "deprecationReason": { "type": "string" }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "devDependencies": {
+    "@biomejs/biome": "catalog:",
+    "@changesets/changelog-github": "catalog:",
+    "@changesets/cli": "catalog:",
+    "tsx": "catalog:",
+    "turbo": "catalog:",
+    "typescript": "catalog:",
+    "ultracite": "catalog:"
+  },
+  "name": "jedd-icons",
+  "scripts": {
+    "clean-svgs": "tsx tools/build-icons/clean-svgs.ts",
+    "icons": "pnpm clean-svgs && pnpm build",
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "lint": "ultracite check",
+    "format": "ultracite fix",
+    "typecheck": "turbo typecheck",
+    "check": "ultracite check",
+    "fix": "ultracite fix",
+    "changeset": "changeset",
+    "version": "changeset version",
+    "release": "turbo build && changeset publish"
+  },
+  "version": "0.0.1",
+  "private": true,
+  "packageManager": "pnpm@11.5.1",
+  "engines": {
+    "node": ">=20"
+  }
+}

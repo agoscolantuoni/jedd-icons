@@ -1,0 +1,6 @@
+{
+  "$schema": "../../icon.schema.json",
+  "contributors": ["jedd"],
+  "tags": ["down-left", "direction", "south-west"],
+  "categories": ["arrows"]
+}

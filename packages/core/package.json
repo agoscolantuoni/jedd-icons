@@ -1,0 +1,53 @@
+{
+  "name": "@jedd-icons/core",
+  "version": "0.0.1",
+  "description": "Jedd icons for vanilla JavaScript.",
+  "type": "module",
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "exports": {
+    ".": {
+      "types": {
+        "import": "./dist/index.d.mts",
+        "require": "./dist/index.d.cts"
+      },
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./fill": {
+      "types": {
+        "import": "./dist/fill.d.mts",
+        "require": "./dist/fill.d.cts"
+      },
+      "import": "./dist/fill.mjs",
+      "require": "./dist/fill.cjs"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "fill": [
+        "./dist/fill.d.mts"
+      ]
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "gen": "tsx ../../tools/build-icons/build.ts --target vanilla",
+    "build": "pnpm gen && tsdown",
+    "dev": "pnpm gen && tsdown --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@jedd-icons/shared": "workspace:*",
+    "tsdown": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:"
+  }
+}

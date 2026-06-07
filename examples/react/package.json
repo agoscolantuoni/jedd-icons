@@ -1,0 +1,17 @@
+{
+  "name": "example-react",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite"
+  },
+  "dependencies": {
+    "@jedd-icons/react": "workspace:*",
+    "react": "catalog:",
+    "react-dom": "catalog:"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "catalog:",
+    "vite": "catalog:"
+  }
+}

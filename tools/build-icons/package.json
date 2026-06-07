@@ -1,0 +1,15 @@
+{
+  "name": "@jedd-icons/build-icons",
+  "version": "0.0.1",
+  "description": "Build tooling that generates icon source files from SVGs.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:"
+  }
+}

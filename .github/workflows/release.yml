@@ -1,0 +1,67 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+  # Manual "launch" trigger. Publishing to npm ONLY happens via this path
+  # (Actions tab -> Release -> Run workflow). Plain pushes to main never
+  # publish; they only open/update the "Version Packages" PR when changesets
+  # are pending. This prevents an accidental publish of the current version
+  # (e.g. 0.0.1) before we are ready to cut the first real release.
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: "Publish to npm (only check this when cutting a real release)"
+        type: boolean
+        default: false
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write # create tags + GitHub releases
+  pull-requests: write # open/update the "Version Packages" PR
+  id-token: write # npm provenance
+
+jobs:
+  release:
+    name: Version or Publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # changelog-github needs full history for PR/author links
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          registry-url: https://registry.npmjs.org
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Create Release PR or Publish
+        uses: changesets/action@v1
+        with:
+          # Consumes pending changesets, bumps versions, writes CHANGELOG.md,
+          # and opens/updates the "Version Packages" PR. Always safe to run.
+          version: pnpm version
+          # `publish` is passed ONLY on a manual run with the publish input
+          # checked. On every other run (plain push to main, or a dispatch
+          # without the box checked) this is empty, so the action never
+          # publishes — it only manages the Version PR.
+          publish: ${{ (github.event_name == 'workflow_dispatch' && inputs.publish) && 'pnpm release' || '' }}
+          commit: "chore: version packages"
+          title: "chore: version packages"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: "true"
