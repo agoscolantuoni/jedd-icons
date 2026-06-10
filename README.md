@@ -1,3 +1,21 @@
+<p align="center">
+  <a href="https://jeddicons.com">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://jeddicons.com/logo/jedd-icons-wordmark-light.svg">
+      <img src="https://jeddicons.com/logo/jedd-icons-wordmark-dark.svg" alt="jedd-icons - Sharp, squared SVG icons distributed as React components and vanilla JS modules." width="480">
+    </picture>
+  </a>
+</p>
+<p align="center">
+  <a href="https://jeddicons.com/">Icons</a>
+  ·
+  <a href="https://jeddicons.com/docs">Docs</a>
+  ·
+  <a href="https://www.npmjs.com/package/@jedd-icons/react">Packages</a>
+  ·
+  <a href="https://github.com/jedd-labs/jedd-icons/blob/main/LICENSE">License</a>
+</p>
+
 # jedd-icons
 
 A monorepo for building and distributing a set of SVG icons as React components and vanilla JS modules.
