@@ -28,7 +28,10 @@ export const Route = createRootRoute({
         content: appDescription,
       },
     ],
-    links: [{ rel: "stylesheet", href: appCss }],
+    links: [
+      { rel: "stylesheet", href: appCss },
+      { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
+    ],
   }),
   component: RootComponent,
 });
@@ -39,7 +42,7 @@ function RootComponent() {
       <head>
         <HeadContent />
       </head>
-      <body className="flex min-h-screen flex-col">
+      <body className="flex min-h-screen flex-col antialiased">
         <RootProvider search={{ SearchDialog }}>
           <TooltipProvider delay={150}>
             <Outlet />
