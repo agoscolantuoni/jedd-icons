@@ -1,6 +1,7 @@
 {
   "devDependencies": {
     "@biomejs/biome": "catalog:",
+    "@changesets/changelog-github": "catalog:",
     "@changesets/cli": "catalog:",
     "lefthook": "catalog:",
     "tsx": "catalog:",

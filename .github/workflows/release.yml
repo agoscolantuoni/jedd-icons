@@ -68,6 +68,9 @@ jobs:
           publish: ${{ (github.event_name == 'workflow_dispatch' && inputs.publish) && 'pnpm run release' || '' }}
           commit: "chore: version packages"
           title: "chore: version packages"
+          # Create a GitHub Release per published package@version, with the
+          # package's changelog entry as the body. Only fires when publish runs.
+          createGithubReleases: true
         env:
           # No NPM_TOKEN: this repo uses npm OIDC trusted publishing (configured
           # per-package on npmjs.com), and the packages are set to disallow
