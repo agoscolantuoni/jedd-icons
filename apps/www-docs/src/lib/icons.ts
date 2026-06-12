@@ -52,3 +52,78 @@ export function humanizeIconName(name: string) {
     .replace(/\s+/g, " ")
     .trim();
 }
+
+export interface SnippetOptions {
+  absolute: boolean;
+  color: string | null;
+  name: string;
+  size: number;
+  strokeWidth: number;
+  variant: Variant;
+}
+
+/** React (`@jedd-icons/react`) usage snippet for the gallery and icon pages. */
+export function buildReactSnippet({
+  name,
+  variant,
+  size,
+  strokeWidth,
+  absolute,
+  color,
+}: SnippetOptions): string {
+  if (!name) {
+    return "";
+  }
+
+  const importPath =
+    variant === "stroke" ? "@jedd-icons/react" : `@jedd-icons/react/${variant}`;
+  const importLine = `import { ${name} } from "${importPath}"`;
+  const colorProp = color ? ` color="${color}"` : "";
+
+  if (variant === "stroke") {
+    const absoluteProp = absolute ? " absoluteStrokeWidth" : "";
+    return `${importLine}\n\n<${name} size={${size}} strokeWidth={${strokeWidth}}${absoluteProp}${colorProp} />`;
+  }
+
+  return `${importLine}\n\n<${name} size={${size}}${colorProp} />`;
+}
+
+/** Vanilla (`@jedd-icons/core`) usage snippet using the `createElement` helper. */
+export function buildVanillaSnippet({
+  name,
+  variant,
+  size,
+  strokeWidth,
+  absolute,
+  color,
+}: SnippetOptions): string {
+  if (!name) {
+    return "";
+  }
+
+  // The core (vanilla) package exposes each icon as plain data plus a
+  // `createElement(iconData, options)` helper. Fill icons live on `/core/fill`
+  // and need `variant: "fill"`; stroke is the default and omits the option.
+  const importPath =
+    variant === "stroke" ? "@jedd-icons/core" : "@jedd-icons/core/fill";
+  const importLine =
+    variant === "stroke"
+      ? `import { ${name}, createElement } from "${importPath}"`
+      : `import { createElement } from "@jedd-icons/core"\nimport { ${name} } from "${importPath}"`;
+
+  const options: string[] = [`size: ${size}`];
+  if (variant === "stroke") {
+    options.push(`strokeWidth: ${strokeWidth}`);
+    if (absolute) {
+      options.push("absoluteStrokeWidth: true");
+    }
+  } else {
+    options.push(`variant: "fill"`);
+  }
+  if (color) {
+    options.push(`color: "${color}"`);
+  }
+
+  const optionsBlock = options.map((o) => `  ${o},`).join("\n");
+  return `${importLine}\n\nconst svg = createElement(${name}, {\n${optionsBlock}\n})\n\ndocument.body.appendChild(svg)`;
+}

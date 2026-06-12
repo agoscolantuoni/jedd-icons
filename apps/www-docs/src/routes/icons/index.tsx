@@ -20,7 +20,14 @@ import { HomeLayout } from "fumadocs-ui/layouts/home";
 import { X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useMemo, useState } from "react";
-import { VARIANT_ICONS, VARIANT_MAPS, type Variant } from "@/lib/icons";
+import {
+  buildReactSnippet,
+  buildVanillaSnippet,
+  type SnippetOptions,
+  VARIANT_ICONS,
+  VARIANT_MAPS,
+  type Variant,
+} from "@/lib/icons";
 import { baseOptions } from "@/lib/layout.shared";
 import { appName, pageTitle, siteUrl } from "@/lib/shared";
 
@@ -99,79 +106,6 @@ function SelectedCorners() {
   );
 }
 
-interface SnippetOptions {
-  absolute: boolean;
-  color: string | null;
-  importPath: string;
-  selected: string | null;
-  size: number;
-  strokeWidth: number;
-  variant: Variant;
-}
-
-function buildReactSnippet({
-  selected,
-  variant,
-  importPath,
-  size,
-  strokeWidth,
-  absolute,
-  color,
-}: SnippetOptions): string {
-  if (!selected) {
-    return "";
-  }
-
-  const importLine = `import { ${selected} } from "${importPath}"`;
-  const colorProp = color ? ` color="${color}"` : "";
-
-  if (variant === "stroke") {
-    const absoluteProp = absolute ? " absoluteStrokeWidth" : "";
-    return `${importLine}\n\n<${selected} size={${size}} strokeWidth={${strokeWidth}}${absoluteProp}${colorProp} />`;
-  }
-
-  return `${importLine}\n\n<${selected} size={${size}}${colorProp} />`;
-}
-
-function buildVanillaSnippet({
-  selected,
-  variant,
-  size,
-  strokeWidth,
-  absolute,
-  color,
-}: SnippetOptions): string {
-  if (!selected) {
-    return "";
-  }
-
-  // The core (vanilla) package exposes each icon as plain data plus a
-  // `createElement(iconData, options)` helper. Fill icons live on `/core/fill`
-  // and need `variant: "fill"`; stroke is the default and omits the option.
-  const importPath =
-    variant === "stroke" ? "@jedd-icons/core" : "@jedd-icons/core/fill";
-  const importLine =
-    variant === "stroke"
-      ? `import { ${selected}, createElement } from "${importPath}"`
-      : `import { createElement } from "@jedd-icons/core"\nimport { ${selected} } from "${importPath}"`;
-
-  const options: string[] = [`size: ${size}`];
-  if (variant === "stroke") {
-    options.push(`strokeWidth: ${strokeWidth}`);
-    if (absolute) {
-      options.push("absoluteStrokeWidth: true");
-    }
-  } else {
-    options.push(`variant: "fill"`);
-  }
-  if (color) {
-    options.push(`color: "${color}"`);
-  }
-
-  const optionsBlock = options.map((o) => `  ${o},`).join("\n");
-  return `${importLine}\n\nconst svg = createElement(${selected}, {\n${optionsBlock}\n})\n\ndocument.body.appendChild(svg)`;
-}
-
 function IconsPage() {
   const [variant, setVariant] = useState<Variant>("stroke");
   const [query, setQuery] = useState("");
@@ -195,13 +129,9 @@ function IconsPage() {
 
   const SelectedComponent = selected ? iconsMap[selected] : null;
 
-  const importPath =
-    variant === "stroke" ? "@jedd-icons/react" : `@jedd-icons/react/${variant}`;
-
   const snippetOptions: SnippetOptions = {
-    selected,
+    name: selected ?? "",
     variant,
-    importPath,
     size,
     strokeWidth,
     absolute,
