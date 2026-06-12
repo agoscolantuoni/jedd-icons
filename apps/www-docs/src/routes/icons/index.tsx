@@ -1,14 +1,23 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { Button } from "@workspace/ui/components/button";
 import { Checkbox } from "@workspace/ui/components/checkbox";
 import { Input } from "@workspace/ui/components/input";
 import { Separator } from "@workspace/ui/components/separator";
 import { Slider } from "@workspace/ui/components/slider";
 import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@workspace/ui/components/tabs";
+import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@workspace/ui/components/tooltip";
+import { DynamicCodeBlock } from "fumadocs-ui/components/dynamic-codeblock";
 import { HomeLayout } from "fumadocs-ui/layouts/home";
+import { X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useMemo, useState } from "react";
 import { VARIANT_ICONS, VARIANT_MAPS, type Variant } from "@/lib/icons";
@@ -100,7 +109,7 @@ interface SnippetOptions {
   variant: Variant;
 }
 
-function buildSnippet({
+function buildReactSnippet({
   selected,
   variant,
   importPath,
@@ -122,6 +131,45 @@ function buildSnippet({
   }
 
   return `${importLine}\n\n<${selected} size={${size}}${colorProp} />`;
+}
+
+function buildVanillaSnippet({
+  selected,
+  variant,
+  size,
+  strokeWidth,
+  absolute,
+  color,
+}: SnippetOptions): string {
+  if (!selected) {
+    return "";
+  }
+
+  // The core (vanilla) package exposes each icon as plain data plus a
+  // `createElement(iconData, options)` helper. Fill icons live on `/core/fill`
+  // and need `variant: "fill"`; stroke is the default and omits the option.
+  const importPath =
+    variant === "stroke" ? "@jedd-icons/core" : "@jedd-icons/core/fill";
+  const importLine =
+    variant === "stroke"
+      ? `import { ${selected}, createElement } from "${importPath}"`
+      : `import { createElement } from "@jedd-icons/core"\nimport { ${selected} } from "${importPath}"`;
+
+  const options: string[] = [`size: ${size}`];
+  if (variant === "stroke") {
+    options.push(`strokeWidth: ${strokeWidth}`);
+    if (absolute) {
+      options.push("absoluteStrokeWidth: true");
+    }
+  } else {
+    options.push(`variant: "fill"`);
+  }
+  if (color) {
+    options.push(`color: "${color}"`);
+  }
+
+  const optionsBlock = options.map((o) => `  ${o},`).join("\n");
+  return `${importLine}\n\nconst svg = createElement(${selected}, {\n${optionsBlock}\n})\n\ndocument.body.appendChild(svg)`;
 }
 
 function IconsPage() {
@@ -150,7 +198,7 @@ function IconsPage() {
   const importPath =
     variant === "stroke" ? "@jedd-icons/react" : `@jedd-icons/react/${variant}`;
 
-  const snippet = buildSnippet({
+  const snippetOptions: SnippetOptions = {
     selected,
     variant,
     importPath,
@@ -158,14 +206,11 @@ function IconsPage() {
     strokeWidth,
     absolute,
     color,
-  });
-
-  const [copied, setCopied] = useState(false);
-  const copy = async () => {
-    await navigator.clipboard.writeText(snippet);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1200);
   };
+  const reactSnippet = buildReactSnippet(snippetOptions);
+  const vanillaSnippet = buildVanillaSnippet(snippetOptions);
+
+  const [codeTab, setCodeTab] = useState<"react" | "vanilla">("react");
 
   const placeholderCount = Math.max(0, 60 - allIcons.length);
   const placeholders = Array.from({ length: placeholderCount }, (_, i) => ({
@@ -182,7 +227,7 @@ function IconsPage() {
           <div className="mx-auto flex max-w-6xl flex-col gap-3 px-6 py-3 text-xs lg:flex-row lg:items-center lg:gap-4">
             {/* Row 1: variant + search + count */}
             <div className="flex items-center gap-3 lg:shrink-0">
-              <div className="flex shrink-0 overflow-hidden rounded-md border border-border">
+              <div className="flex shrink-0 overflow-hidden rounded-none border border-border">
                 {(["stroke", "fill"] as const).map((v) => (
                   <button
                     className={`px-2.5 py-1 text-xs capitalize transition-colors ${
@@ -432,7 +477,7 @@ function IconsPage() {
             transition={{ type: "spring", damping: 30, stiffness: 300 }}
           >
             <div className="mx-auto flex max-w-6xl items-start gap-6 px-6 py-4 sm:items-center">
-              <div className="flex shrink-0 items-center justify-center rounded-md border border-border bg-muted/30 p-4">
+              <div className="flex shrink-0 items-center justify-center rounded-none border border-border bg-muted/30 p-4">
                 <SelectedComponent
                   size={48}
                   {...(variant === "stroke"
@@ -445,34 +490,61 @@ function IconsPage() {
               <div className="flex min-w-0 flex-1 flex-col gap-2">
                 <div className="flex items-center justify-between">
                   <h2 className="font-semibold text-sm">{selected}</h2>
-                  <div className="flex items-center gap-3">
-                    <button
-                      className="text-muted-foreground text-xs hover:text-foreground"
-                      onClick={copy}
-                      type="button"
-                    >
-                      {copied ? "Copied!" : "Copy"}
-                    </button>
-                    <Link
-                      className="text-muted-foreground text-xs hover:text-foreground"
-                      params={{ name: selected }}
-                      search={{ variant }}
-                      to="/icons/$name"
-                    >
-                      Expand &rarr;
-                    </Link>
-                    <button
-                      className="text-muted-foreground text-xs hover:text-foreground"
+                  <div className="flex items-center gap-2">
+                    <Button
+                      render={
+                        <Link
+                          params={{ name: selected }}
+                          search={{ variant }}
+                          to="/icons/$name"
+                        >
+                          Expand &rarr;
+                        </Link>
+                      }
+                      size="sm"
+                      variant="ghost"
+                    />
+                    <Button
+                      aria-label="Close"
                       onClick={() => setSelected(null)}
-                      type="button"
+                      size="icon-sm"
+                      variant="ghost"
                     >
-                      &times;
-                    </button>
+                      <X />
+                    </Button>
                   </div>
                 </div>
-                <pre className="overflow-x-auto rounded-md border border-border bg-muted/30 p-2 text-xs">
-                  <code>{snippet}</code>
-                </pre>
+                <Tabs
+                  onValueChange={(value) =>
+                    setCodeTab(value as "react" | "vanilla")
+                  }
+                  value={codeTab}
+                >
+                  <TabsList variant="line">
+                    <TabsTrigger value="react">React</TabsTrigger>
+                    <TabsTrigger value="vanilla">Vanilla</TabsTrigger>
+                  </TabsList>
+                  <TabsContent value="react">
+                    <DynamicCodeBlock
+                      code={reactSnippet}
+                      codeblock={{
+                        className: "rounded-none",
+                        viewportProps: { className: "h-32" },
+                      }}
+                      lang="tsx"
+                    />
+                  </TabsContent>
+                  <TabsContent value="vanilla">
+                    <DynamicCodeBlock
+                      code={vanillaSnippet}
+                      codeblock={{
+                        className: "rounded-none",
+                        viewportProps: { className: "h-32" },
+                      }}
+                      lang="js"
+                    />
+                  </TabsContent>
+                </Tabs>
               </div>
             </div>
           </motion.div>
