@@ -36,6 +36,29 @@ html {
   );
 }
 
+/* sugar-high syntax tokens for <CodeSnippet>. Mapped onto the theme so the
+   highlighting adapts to light/dark via the existing color variables. */
+:root {
+  --sh-identifier: var(--foreground);
+  --sh-keyword: oklch(0.55 0.18 280);
+  --sh-string: oklch(0.55 0.13 150);
+  --sh-class: oklch(0.6 0.15 50);
+  --sh-property: oklch(0.55 0.14 230);
+  --sh-entity: oklch(0.55 0.14 230);
+  --sh-jsxliterals: oklch(0.6 0.15 50);
+  --sh-sign: var(--muted-foreground);
+  --sh-comment: var(--muted-foreground);
+}
+
+.dark {
+  --sh-keyword: oklch(0.74 0.13 300);
+  --sh-string: oklch(0.78 0.13 150);
+  --sh-class: oklch(0.8 0.12 70);
+  --sh-property: oklch(0.74 0.12 230);
+  --sh-entity: oklch(0.74 0.12 230);
+  --sh-jsxliterals: oklch(0.8 0.12 70);
+}
+
 html > body[data-scroll-locked] {
   --removed-body-scroll-bar-size: 0px !important;
   margin-right: 0px !important;
