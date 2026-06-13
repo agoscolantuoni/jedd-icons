@@ -32,6 +32,18 @@ export function releaseUrl(version: string) {
   return `${repoUrl}/releases/tag/${tag}`;
 }
 
+/** GitHub profile URL for a username. */
+export function githubProfileUrl(username: string) {
+  return `https://github.com/${encodeURIComponent(username)}`;
+}
+
+/**
+ * GitHub avatar image URL for a username. `https://github.com/<user>.png`
+ */
+export function githubAvatarUrl(username: string, size = 64) {
+  return `https://github.com/${encodeURIComponent(username)}.png?size=${size}`;
+}
+
 /**
  * Builds a document title. Pass a page name to get "<page> — <appName>";
  * call with no argument for the site-wide default.

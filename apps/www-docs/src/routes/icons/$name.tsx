@@ -12,10 +12,12 @@ import {
 import { DynamicCodeBlock } from "fumadocs-ui/components/dynamic-codeblock";
 import { HomeLayout } from "fumadocs-ui/layouts/home";
 import { useId, useState } from "react";
+import { IconContributors } from "@/components/icon-contributors";
 import { IconReleaseInfo } from "@/components/icon-release-info";
 import {
   buildReactSnippet,
   buildVanillaSnippet,
+  getIconContributors,
   getIconRelease,
   humanizeIconName,
   type SnippetOptions,
@@ -61,6 +63,7 @@ function IconPage() {
   const [variant, setVariant] = useState<Variant>(initialVariant);
   const Component = VARIANT_MAPS[variant][name];
   const release = getIconRelease(name);
+  const contributors = getIconContributors(name, variant);
 
   const [size, setSize] = useState(48);
   const [strokeWidth, setStrokeWidth] = useState(2);
@@ -123,6 +126,15 @@ function IconPage() {
             <h1 className="font-heading text-2xl">{name}</h1>
 
             <IconReleaseInfo className="-mt-3" release={release} />
+
+            {contributors.length > 0 && (
+              <div className="flex items-center gap-2">
+                <span className="text-muted-foreground text-xs">
+                  {contributors.length > 1 ? "Contributors" : "Contributor"}
+                </span>
+                <IconContributors contributors={contributors} />
+              </div>
+            )}
 
             {availableVariants.length > 1 && (
               <Tabs
