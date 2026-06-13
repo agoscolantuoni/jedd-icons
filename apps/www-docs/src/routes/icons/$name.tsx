@@ -12,6 +12,7 @@ import {
 import { DynamicCodeBlock } from "fumadocs-ui/components/dynamic-codeblock";
 import { HomeLayout } from "fumadocs-ui/layouts/home";
 import { useId, useState } from "react";
+import { IconReleaseInfo } from "@/components/icon-release-info";
 import {
   buildReactSnippet,
   buildVanillaSnippet,
@@ -121,29 +122,7 @@ function IconPage() {
 
             <h1 className="font-heading text-2xl">{name}</h1>
 
-            {release && (
-              <p className="-mt-3 text-muted-foreground text-xs">
-                {release.unreleased ? (
-                  "Unreleased"
-                ) : (
-                  <>
-                    Added in{" "}
-                    <span
-                      className="font-medium text-foreground"
-                      title={new Date(
-                        release.createdRelease.date
-                      ).toLocaleDateString(undefined, {
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                      })}
-                    >
-                      v{release.createdRelease.version}
-                    </span>
-                  </>
-                )}
-              </p>
-            )}
+            <IconReleaseInfo className="-mt-3" release={release} />
 
             {availableVariants.length > 1 && (
               <Tabs
