@@ -15,11 +15,11 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@workspace/ui/components/tooltip";
-import { DynamicCodeBlock } from "fumadocs-ui/components/dynamic-codeblock";
 import { HomeLayout } from "fumadocs-ui/layouts/home";
 import { X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useMemo, useState } from "react";
+import { CodeSnippet } from "@/components/code-snippet";
 import { IconContributors } from "@/components/icon-contributors";
 import { IconReleaseInfo } from "@/components/icon-release-info";
 import {
@@ -467,24 +467,10 @@ function IconsPage() {
                     <TabsTrigger value="vanilla">Vanilla</TabsTrigger>
                   </TabsList>
                   <TabsContent value="react">
-                    <DynamicCodeBlock
-                      code={reactSnippet}
-                      codeblock={{
-                        className: "rounded-none",
-                        viewportProps: { className: "h-32" },
-                      }}
-                      lang="tsx"
-                    />
+                    <CodeSnippet code={reactSnippet} />
                   </TabsContent>
                   <TabsContent value="vanilla">
-                    <DynamicCodeBlock
-                      code={vanillaSnippet}
-                      codeblock={{
-                        className: "rounded-none",
-                        viewportProps: { className: "h-32" },
-                      }}
-                      lang="js"
-                    />
+                    <CodeSnippet code={vanillaSnippet} />
                   </TabsContent>
                 </Tabs>
               </div>

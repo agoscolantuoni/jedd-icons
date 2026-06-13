@@ -102,6 +102,9 @@ catalogs:
     shadcn:
       specifier: ^4.7.0
       version: 4.7.0
+    sugar-high:
+      specifier: ^1.2.1
+      version: 1.2.1
     tailwind-merge:
       specifier: ^3.6.0
       version: 3.6.0
@@ -206,6 +209,9 @@ importers:
       react-dom:
         specifier: 'catalog:'
         version: 19.2.6(react@19.2.6)
+      sugar-high:
+        specifier: 'catalog:'
+        version: 1.2.1
       tailwind-merge:
         specifier: 'catalog:'
         version: 3.6.0
@@ -5396,6 +5402,9 @@ packages:
 
   style-to-object@1.0.14:
     resolution: {integrity: sha512-LIN7rULI0jBscWQYaSswptyderlarFkjQ+t79nzty8tcIAceVomEVlLzH5VP4Cmsv6MtKhs7qaAiwlcp+Mgaxw==}
+
+  sugar-high@1.2.1:
+    resolution: {integrity: sha512-C2E0iSC0Gwv+7t32ATFxgiH6fxskoSfd/nF5z11pQSrgJHYjY8/U11K+X0izV9ZyPNPwaomtn6uF7y11MxVNQA==}
 
   supports-color@10.2.2:
     resolution: {integrity: sha512-SS+jx45GF1QjgEXQx4NJZV9ImqmO2NPz5FNsIHrsDjh2YsHnawpan7SNQ1o8NuhrbHZy9AZhIoCUiCeaW/C80g==}
@@ -11165,6 +11174,8 @@ snapshots:
   style-to-object@1.0.14:
     dependencies:
       inline-style-parser: 0.2.7
+
+  sugar-high@1.2.1: {}
 
   supports-color@10.2.2: {}
 

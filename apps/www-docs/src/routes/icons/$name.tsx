@@ -9,9 +9,9 @@ import {
   TabsList,
   TabsTrigger,
 } from "@workspace/ui/components/tabs";
-import { DynamicCodeBlock } from "fumadocs-ui/components/dynamic-codeblock";
 import { HomeLayout } from "fumadocs-ui/layouts/home";
 import { useId, useState } from "react";
+import { CodeSnippet } from "@/components/code-snippet";
 import { IconContributors } from "@/components/icon-contributors";
 import { IconReleaseInfo } from "@/components/icon-release-info";
 import {
@@ -231,18 +231,10 @@ function IconPage() {
                 <TabsTrigger value="vanilla">Vanilla</TabsTrigger>
               </TabsList>
               <TabsContent value="react">
-                <DynamicCodeBlock
-                  code={reactSnippet}
-                  codeblock={{ className: "rounded-none" }}
-                  lang="tsx"
-                />
+                <CodeSnippet code={reactSnippet} heightClassName="h-64" />
               </TabsContent>
               <TabsContent value="vanilla">
-                <DynamicCodeBlock
-                  code={vanillaSnippet}
-                  codeblock={{ className: "rounded-none" }}
-                  lang="js"
-                />
+                <CodeSnippet code={vanillaSnippet} heightClassName="h-64" />
               </TabsContent>
             </Tabs>
           </div>
