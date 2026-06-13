@@ -1,6 +1,7 @@
 import type { JeddIcon } from "@jedd-icons/react";
 import * as StrokeLib from "@jedd-icons/react";
 import * as FillLib from "@jedd-icons/react/fill";
+import iconContributors from "generated/icon-contributors.json";
 import iconReleases from "generated/icon-releases.json";
 
 export type Variant = "stroke" | "fill";
@@ -80,6 +81,22 @@ const releases = iconReleases as Record<string, IconRelease>;
  */
 export function getIconRelease(name: string): IconRelease | null {
   return releases[pascalToKebab(name)] ?? null;
+}
+
+// Generated from the icon `.json` sidecars by `pnpm gen-contributors`. Keyed by
+// kebab-case source name → variant → ordered, de-duplicated GitHub usernames.
+const contributors = iconContributors as Record<
+  string,
+  Partial<Record<Variant, string[]>>
+>;
+
+/**
+ * GitHub usernames who contributed a specific variant of an icon, by its
+ * PascalCase component name. Stroke and fill can have different contributors.
+ * Returns an empty array when none are recorded.
+ */
+export function getIconContributors(name: string, variant: Variant): string[] {
+  return contributors[pascalToKebab(name)]?.[variant] ?? [];
 }
 
 export interface SnippetOptions {

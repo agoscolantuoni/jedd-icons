@@ -5,17 +5,19 @@
   "sideEffects": false,
   "scripts": {
     "gen-releases": "tsx ../../tools/build-icons/gen-releases.ts",
-    "predev": "pnpm gen-releases",
+    "gen-contributors": "tsx ../../tools/build-icons/gen-contributors.ts",
+    "gen-data": "pnpm gen-releases && pnpm gen-contributors",
+    "predev": "pnpm gen-data",
     "dev": "vite dev",
-    "prebuild": "pnpm gen-releases",
+    "prebuild": "pnpm gen-data",
     "build": "vite build",
     "start": "vite preview",
     "preview": "vite preview",
     "deploy": "npm run build && wrangler deploy",
     "deploy:dry": "npm run build && wrangler deploy --dry-run",
     "cf-typegen": "wrangler types",
-    "types:check": "fumadocs-mdx && pnpm gen-releases && tsc --noEmit",
-    "postinstall": "fumadocs-mdx && pnpm gen-releases"
+    "types:check": "fumadocs-mdx && pnpm gen-data && tsc --noEmit",
+    "postinstall": "fumadocs-mdx && pnpm gen-data"
   },
   "dependencies": {
     "@tanstack/react-router": "catalog:",

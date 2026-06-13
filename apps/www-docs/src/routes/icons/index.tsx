@@ -20,10 +20,12 @@ import { HomeLayout } from "fumadocs-ui/layouts/home";
 import { X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useMemo, useState } from "react";
+import { IconContributors } from "@/components/icon-contributors";
 import { IconReleaseInfo } from "@/components/icon-release-info";
 import {
   buildReactSnippet,
   buildVanillaSnippet,
+  getIconContributors,
   getIconRelease,
   type SnippetOptions,
   VARIANT_ICONS,
@@ -421,9 +423,14 @@ function IconsPage() {
 
               <div className="flex min-w-0 flex-1 flex-col gap-2">
                 <div className="flex items-center justify-between">
-                  <div className="flex flex-col">
+                  <div className="flex flex-col gap-1">
                     <h2 className="font-semibold text-sm">{selected}</h2>
-                    <IconReleaseInfo release={getIconRelease(selected)} />
+                    <div className="flex items-center gap-3">
+                      <IconReleaseInfo release={getIconRelease(selected)} />
+                      <IconContributors
+                        contributors={getIconContributors(selected, variant)}
+                      />
+                    </div>
                   </div>
                   <div className="flex items-center gap-2">
                     <Button
