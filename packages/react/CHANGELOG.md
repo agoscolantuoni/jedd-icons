@@ -1,5 +1,11 @@
 # @jedd-icons/react
 
+## 0.0.6
+
+### Patch Changes
+
+- [#26](https://github.com/jedd-labs/jedd-icons/pull/26) [`3d24400`](https://github.com/jedd-labs/jedd-icons/commit/3d244004f6f4eaa8b658faab5d2318d119fee757) Thanks [@agoscolantuoni](https://github.com/agoscolantuoni)! - Add arrow-up-left, arrow-up-right
+
 ## 0.0.5
 
 ### Patch Changes
