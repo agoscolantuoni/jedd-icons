@@ -1,7 +1,6 @@
 packages:
   - "apps/*"
   - "packages/*"
-  - "examples/*"
   - "tools/*"
 catalogMode: prefer
 cleanupUnusedCatalogs: true
@@ -78,5 +77,5 @@ catalog:
 
   # Turbo gen
   "@turbo/gen": ^2.8.1
-  '@fontsource-variable/figtree': ^5.2.10
+  "@fontsource-variable/figtree": ^5.2.10
   knip: ^6.24.0
