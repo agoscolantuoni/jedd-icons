@@ -10,8 +10,6 @@
     "@base-ui/react": "catalog:",
     "@fontsource-variable/figtree": "catalog:",
     "@fontsource-variable/hubot-sans": "catalog:",
-    "@fontsource-variable/inter": "catalog:",
-    "@fontsource-variable/sora": "catalog:",
     "@fontsource/iosevka": "catalog:",
     "class-variance-authority": "catalog:",
     "clsx": "catalog:",
@@ -21,12 +19,9 @@
     "shadcn": "catalog:",
     "tailwind-merge": "catalog:",
     "tw-animate-css": "catalog:",
-    "vaul": "catalog:",
-    "zod": "catalog:"
+    "vaul": "catalog:"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "catalog:",
-    "@turbo/gen": "catalog:",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
