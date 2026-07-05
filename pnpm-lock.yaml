@@ -27,12 +27,6 @@ catalogs:
     '@fontsource-variable/hubot-sans':
       specifier: ^5.2.8
       version: 5.2.8
-    '@fontsource-variable/inter':
-      specifier: ^5.2.8
-      version: 5.2.8
-    '@fontsource-variable/sora':
-      specifier: ^5.2.8
-      version: 5.2.8
     '@fontsource/iosevka':
       specifier: ^5.2.5
       version: 5.2.5
@@ -319,12 +313,6 @@ importers:
         specifier: 'catalog:'
         version: 5.2.10
       '@fontsource-variable/hubot-sans':
-        specifier: 'catalog:'
-        version: 5.2.8
-      '@fontsource-variable/inter':
-        specifier: 'catalog:'
-        version: 5.2.8
-      '@fontsource-variable/sora':
         specifier: 'catalog:'
         version: 5.2.8
       '@fontsource/iosevka':
@@ -1287,12 +1275,6 @@ packages:
 
   '@fontsource-variable/hubot-sans@5.2.8':
     resolution: {integrity: sha512-snt3rHAg6IrE0DKltYvjsIoeB+GSUpQHY3PAkMGUzxp8gN31kTl8yFuyuK6RcknIjtCVo7v0S6i31Oif3QxtjA==}
-
-  '@fontsource-variable/inter@5.2.8':
-    resolution: {integrity: sha512-kOfP2D+ykbcX/P3IFnokOhVRNoTozo5/JxhAIVYLpea/UBmCQ/YWPBfWIDuBImXX/15KH+eKh4xpEUyS2sQQGQ==}
-
-  '@fontsource-variable/sora@5.2.8':
-    resolution: {integrity: sha512-sP+ILTfi5r3cqmMBntI4ooQNxFI+LyHyD5hcPbWwwL4uh4kKFAkOz0w2veCXjz18fKRdva6OG0dY+5yQ02f30w==}
 
   '@fontsource/iosevka@5.2.5':
     resolution: {integrity: sha512-Zv/UHJodDug1LcnWv2u2+GPp3oWP3U6Xp16cJOsqqZQNsCu8sA/ttT331N0NypxBZ+7c8szlSRlYDcy9liZ8pw==}
@@ -7056,10 +7038,6 @@ snapshots:
   '@fontsource-variable/figtree@5.2.10': {}
 
   '@fontsource-variable/hubot-sans@5.2.8': {}
-
-  '@fontsource-variable/inter@5.2.8': {}
-
-  '@fontsource-variable/sora@5.2.8': {}
 
   '@fontsource/iosevka@5.2.5': {}
 
