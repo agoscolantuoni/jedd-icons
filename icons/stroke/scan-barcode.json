@@ -1,0 +1,6 @@
+{
+  "$schema": "../../icon.schema.json",
+  "contributors": ["agoscolantuoni"],
+  "tags": ["scan", "barcode", "detect", "read", "product"],
+  "categories": ["actions"]
+}
