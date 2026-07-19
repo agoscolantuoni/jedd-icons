@@ -353,12 +353,13 @@ function IconPage() {
                   </Button>
                 </div>
 
-                <div className="order-6 lg:order-none">
+                <div className="order-6 flex min-h-0 flex-col lg:order-none lg:flex-1">
                   <h2 className="font-heading text-lg">Usage</h2>
                   <UsageTabs
-                    className="mt-3"
-                    heightClassName="h-56"
+                    className="mt-3 lg:min-h-0 lg:flex-1"
+                    heightClassName="h-56 lg:h-full"
                     reactSnippet={reactSnippet}
+                    snippetClassName="lg:h-full"
                     vanillaSnippet={vanillaSnippet}
                   />
                 </div>
