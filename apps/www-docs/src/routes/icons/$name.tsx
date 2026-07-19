@@ -150,10 +150,18 @@ function IconPage() {
           {/* Preview + controls + metadata */}
           <section className="relative border-border border-b px-6 py-10">
             <GridDots columns={frameColumns} row="100%" y="outer-bottom" />
-            <div className="mx-auto grid max-w-5xl gap-10 lg:grid-cols-[380px_1fr]">
-              {/* Left column: preview, size ladder, controls */}
-              <div className="flex flex-col gap-4">
-                <div className="flex gap-3">
+            <div className="mx-auto grid max-w-5xl gap-y-6 lg:grid-cols-[380px_1fr] lg:gap-x-10 lg:gap-y-0">
+              {/*
+                Each column below is `contents` on mobile (its box disappears, so
+                its children flatten into the outer grid and follow the `order-*`
+                classes) and becomes a real flex column at `lg`, restoring the
+                original two-column desktop layout in source order (`lg:order-none`
+                cancels the mobile ordering).
+              */}
+
+              {/* Left column (desktop): preview + size ladder, then controls */}
+              <div className="contents lg:col-start-1 lg:flex lg:flex-col lg:gap-4">
+                <div className="order-3 flex gap-3 lg:order-none">
                   <div
                     className="relative flex aspect-square flex-1 items-center justify-center border border-border bg-muted/20 p-10"
                     ref={previewRef}
@@ -196,7 +204,7 @@ function IconPage() {
                   </div>
                 </div>
 
-                <div className="border border-border p-5">
+                <div className="order-4 border border-border p-5 lg:order-none">
                   <div className="grid gap-5 sm:grid-cols-2">
                     <div className="flex flex-col gap-4">
                       <div className="flex flex-col gap-1.5">
@@ -282,9 +290,9 @@ function IconPage() {
                 </div>
               </div>
 
-              {/* Right column: title, metadata, actions, usage */}
-              <div className="flex min-w-0 flex-col gap-6">
-                <div className="flex flex-col gap-3">
+              {/* Right column (desktop): title, metadata, actions, usage */}
+              <div className="contents lg:col-start-2 lg:flex lg:min-w-0 lg:flex-col lg:gap-6">
+                <div className="order-1 flex flex-col gap-3 lg:order-none">
                   <div>
                     <h1 className="font-heading text-3xl">
                       {humanizeIconName(name)}
@@ -312,7 +320,7 @@ function IconPage() {
                   )}
                 </div>
 
-                <div className="flex flex-wrap items-start justify-between gap-4 border-border border-t pt-4">
+                <div className="order-2 flex flex-wrap items-start justify-between gap-4 border-border border-t pt-4 lg:order-none">
                   <div className="flex flex-wrap items-center gap-2">
                     {categories.map((category) => (
                       <Badge key={category} variant="secondary">
@@ -336,7 +344,7 @@ function IconPage() {
                   </div>
                 </div>
 
-                <div className="flex flex-wrap gap-3">
+                <div className="order-5 flex flex-wrap gap-3 lg:order-none">
                   <Button onClick={downloadSvg} variant="outline">
                     <Download />
                     Download SVG
@@ -347,7 +355,7 @@ function IconPage() {
                   </Button>
                 </div>
 
-                <div>
+                <div className="order-6 lg:order-none">
                   <h2 className="font-heading text-lg">Usage</h2>
                   <UsageTabs
                     className="mt-3"
