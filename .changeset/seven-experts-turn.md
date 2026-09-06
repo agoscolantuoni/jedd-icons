@@ -3,4 +3,4 @@
 "@jedd-icons/react": patch
 ---
 
-Edit icons scan-qr-core, scan-face
+Edit icons scan-qr-code, scan-face
