@@ -1,0 +1,6 @@
+{
+  "$schema": "../../icon.schema.json",
+  "contributors": ["agoscolantuoni"],
+  "tags": ["list", "bullets", "points", "items", "unordered", "menu"],
+  "categories": ["text"]
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "../../icon.schema.json",
+  "contributors": ["agoscolantuoni"],
+  "tags": [
+    "list",
+    "layout",
+    "grid",
+    "view",
+    "columns",
+    "structure",
+    "todo",
+    "tasks"
+  ],
+  "categories": ["text"]
+}
