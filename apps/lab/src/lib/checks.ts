@@ -11,17 +11,13 @@ import {
 import type { Variant } from "@/lib/icons";
 import { marginReportFor } from "@/lib/margin";
 import { flattenPieces, type IconNodeChild } from "@/lib/svg-path";
+import iconSchema from "../../../../icon.schema.json";
 
-export type CheckId =
-  | "margin"
-  | "multiElement"
-  | "forbiddenElements"
-  | "offGrid"
-  | "metadata";
+export type CheckId = "margin" | "forbiddenElements" | "offGrid" | "metadata";
 
 export interface CheckDef {
   /** Tailwind accent used for the pill + badge dot. */
-  accent: "rose" | "amber" | "violet" | "sky" | "orange";
+  accent: "rose" | "violet" | "sky" | "orange";
   /** One-line explanation of the rule for tooltips/legend. */
   hint: string;
   id: CheckId;
@@ -35,12 +31,6 @@ export const CHECKS: CheckDef[] = [
     label: "Margin issues",
     hint: "Geometry crosses the 1px safe margin",
     accent: "rose",
-  },
-  {
-    id: "multiElement",
-    label: "Multi-element",
-    hint: "Made of more than one top-level SVG element",
-    accent: "amber",
   },
   {
     id: "forbiddenElements",
@@ -75,27 +65,12 @@ const FORBIDDEN_TAGS = new Set([
   "filter",
 ]);
 
-const VALID_CATEGORIES = new Set([
-  "account",
-  "actions",
-  "arrows",
-  "development",
-  "charts",
-  "communication",
-  "design",
-  "devices",
-  "files",
-  "layout",
-  "media",
-  "navigation",
-  "security",
-  "shapes",
-  "social",
-  "text",
-  "time",
-  "tools",
-  "weather",
-]);
+// The closed category enum, read from the schema the sidecars are validated
+// against, so the Lab can't drift from it (a hand-kept copy once missed
+// "ecommerce").
+const VALID_CATEGORIES = new Set<string>(
+  iconSchema.properties.categories.items.enum
+);
 
 const VIEW = 24;
 const EPS = 0.01;
@@ -172,7 +147,6 @@ function forbiddenTags(
 }
 
 export interface IconCheckDetail {
-  elementCount: number;
   forbiddenTags: string[];
   marginOverflow: number;
   meta: ReturnType<typeof getIconMeta>;
@@ -190,7 +164,6 @@ export function getIconCheckDetail(
     meta: getIconMeta(name, variant),
     metadataIssues: metadataIssues(name, variant),
     forbiddenTags: [...forbiddenTags(node)],
-    elementCount: node.length,
     offGrid: isOffGrid(node),
     marginOverflow: marginReportFor(name, variant).worst,
   };
@@ -208,9 +181,6 @@ function checkIcon(name: string): Set<CheckId> {
     }
     if (marginReportFor(name, variant).violates) {
       failed.add("margin");
-    }
-    if (node.length > 1) {
-      failed.add("multiElement");
     }
     if (hasForbiddenElement(node)) {
       failed.add("forbiddenElements");
@@ -253,7 +223,6 @@ export function getIconFlags(name: string): Set<CheckId> {
 export function getCheckCounts(): Record<CheckId, number> {
   const counts = {
     margin: 0,
-    multiElement: 0,
     forbiddenElements: 0,
     offGrid: 0,
     metadata: 0,

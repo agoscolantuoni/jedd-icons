@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   indexExportLine,
   isStripped,
+  mergePathNodes,
   parseSvg,
   renderReactIconFile,
   renderVanillaIconFile,
@@ -79,6 +80,120 @@ describe("stripInheritedAttrs", () => {
       ["path", { d: "M1 1" }],
       ["path", { d: "M2 2", "stroke-linejoin": "bevel" }],
     ]);
+  });
+});
+
+describe("mergePathNodes", () => {
+  it("joins sibling paths without a separator", () => {
+    expect(
+      mergePathNodes([
+        ["path", { d: "M1 1H5Z" }],
+        ["path", { d: " M2 2V8 " }],
+      ])
+    ).toEqual([["path", { d: "M1 1H5ZM2 2V8" }]]);
+  });
+
+  it("merges only paths that share the same presentation", () => {
+    expect(
+      mergePathNodes([
+        ["path", { d: "M3 5H3.01", "stroke-linecap": "square" }],
+        ["path", { d: "M8 5H21" }],
+        ["path", { d: "M3 9H3.01", "stroke-linecap": "square" }],
+        ["path", { d: "M8 9H21" }],
+      ])
+    ).toEqual([
+      ["path", { d: "M3 5H3.01M3 9H3.01", "stroke-linecap": "square" }],
+      ["path", { d: "M8 5H21M8 9H21" }],
+    ]);
+  });
+
+  it("converts circles and rects to path data and merges them", () => {
+    expect(
+      mergePathNodes([
+        ["path", { d: "M20 20L17 17" }],
+        ["circle", { cx: "11", cy: "11", r: "8" }],
+        ["rect", { x: "3", y: "3", width: "4", height: "2" }],
+      ])
+    ).toEqual([
+      [
+        "path",
+        {
+          d: "M20 20L17 17M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11ZM3 3H7V5H3V3Z",
+        },
+      ],
+    ]);
+  });
+
+  it("applies a line join where it shows, merging a circle with bevelled hands", () => {
+    // The circle has no corners, so the hands' bevel can't change it.
+    expect(
+      mergePathNodes([
+        ["circle", { cx: "12", cy: "12", r: "1" }],
+        ["path", { d: "M12 7V12H16", "stroke-linejoin": "bevel" }],
+      ])
+    ).toEqual([
+      [
+        "path",
+        {
+          d: "M13 12C13 12.5523 12.5523 13 12 13C11.4477 13 11 12.5523 11 12C11 11.4477 11.4477 11 12 11C12.5523 11 13 11.4477 13 12ZM12 7V12H16",
+          "stroke-linejoin": "bevel",
+        },
+      ],
+    ]);
+  });
+
+  it("keeps a cap or join that shows nowhere only if the layers agree", () => {
+    expect(
+      mergePathNodes([["path", { d: "M8 12H16", "stroke-linejoin": "round" }]])
+    ).toEqual([["path", { d: "M8 12H16", "stroke-linejoin": "round" }]]);
+    // A cap on a closed shape and a join on a corner-less line never render.
+    expect(
+      mergePathNodes([
+        ["path", { d: "M3 3H21V21H3Z", "stroke-linecap": "square" }],
+        ["path", { d: "M8 12H16", "stroke-linejoin": "round" }],
+      ])
+    ).toEqual([["path", { d: "M3 3H21V21H3ZM8 12H16" }]]);
+  });
+
+  it("keeps paths separate when a different join would show on both", () => {
+    expect(
+      mergePathNodes([
+        ["path", { d: "M3 3H21V21", "stroke-linejoin": "round" }],
+        ["path", { d: "M12 7V12H16" }],
+      ])
+    ).toEqual([
+      ["path", { d: "M3 3H21V21", "stroke-linejoin": "round" }],
+      ["path", { d: "M12 7V12H16" }],
+    ]);
+  });
+
+  it("keeps elements it can't convert in place", () => {
+    const group = ["g", {}, [["path", { d: "M3 3H5" }]]] as never;
+    expect(
+      mergePathNodes([
+        ["path", { d: "M1 1H5" }],
+        group,
+        ["path", { d: "M2 2V8" }],
+      ])
+    ).toEqual([["path", { d: "M1 1H5M2 2V8" }], group]);
+  });
+
+  it("leaves a path starting with a relative moveto unmerged", () => {
+    const nodes = [
+      ["path", { d: "M1 1H5" }],
+      ["path", { d: "m2 2v6" }],
+    ] as never;
+    expect(mergePathNodes(nodes)).toEqual(nodes);
+  });
+
+  it("does not mutate its input", () => {
+    const nodes = [
+      ["path", { d: "M1 1" }],
+      ["path", { d: "M2 2" }],
+    ] as never;
+    const copy = structuredClone(nodes);
+    mergePathNodes(nodes);
+    expect(nodes).toEqual(copy);
   });
 });
 
