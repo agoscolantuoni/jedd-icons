@@ -3,4 +3,4 @@
 "@jedd-icons/react": minor
 ---
 
-Add truck, truck-delivery, truck-electricc, truck-return, truck-send
+Add truck, truck-delivery, truck-electric, truck-return, truck-send
