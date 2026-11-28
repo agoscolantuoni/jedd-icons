@@ -1,0 +1,14 @@
+{
+  "$schema": "../../icon.schema.json",
+  "contributors": ["agoscolantuoni"],
+  "tags": [
+    "app window",
+    "application",
+    "window",
+    "ai",
+    "artificial intelligence",
+    "interface",
+    "software"
+  ],
+  "categories": ["devices", "development"]
+}

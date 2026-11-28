@@ -1,0 +1,14 @@
+{
+  "$schema": "../../icon.schema.json",
+  "contributors": ["agoscolantuoni"],
+  "tags": [
+    "browser",
+    "web",
+    "internet",
+    "website",
+    "window",
+    "navigation",
+    "application"
+  ],
+  "categories": ["devices", "navigation", "development"]
+}

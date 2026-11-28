@@ -1,0 +1,18 @@
+{
+  "$schema": "../../icon.schema.json",
+  "contributors": ["agoscolantuoni"],
+  "tags": [
+    "app window",
+    "application",
+    "window",
+    "plus",
+    "add",
+    "new",
+    "interface",
+    "open",
+    "install",
+    "tab",
+    "expand"
+  ],
+  "categories": ["devices", "actions"]
+}

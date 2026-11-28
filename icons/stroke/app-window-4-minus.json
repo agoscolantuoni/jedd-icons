@@ -1,0 +1,17 @@
+{
+  "$schema": "../../icon.schema.json",
+  "contributors": ["agoscolantuoni"],
+  "tags": [
+    "app window",
+    "application",
+    "window",
+    "minus",
+    "remove",
+    "decrease",
+    "interface",
+    "close",
+    "uninstall",
+    "collapse"
+  ],
+  "categories": ["devices", "actions"]
+}
