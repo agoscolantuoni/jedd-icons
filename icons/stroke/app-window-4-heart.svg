@@ -2,5 +2,5 @@
 <path d="M14.06 8L14 8" stroke-linecap="square" stroke-linejoin="round"/>
 <path d="M18.06 8L18 8" stroke-linecap="square" stroke-linejoin="round"/>
 <path d="M19.8 14C21.015 14 22 15.0139 22 16.2647C22 18.7153 18 21 18 21C18 21 14 18.7153 14 16.2647C14 15.0139 14.985 14 16.2 14C16.9443 14 17.6019 14.3807 18 14.9631C18.3981 14.3807 19.0557 14 19.8 14Z"/>
-<path d="M22 11V4H2V20H12"/>
+<path d="M22 10V4H2V20H11" stroke-linecap="square"/>
 </svg>
