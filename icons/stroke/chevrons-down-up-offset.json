@@ -1,0 +1,15 @@
+{
+  "$schema": "../../icon.schema.json",
+  "contributors": ["agoscolantuoni"],
+  "tags": [
+    "chevrons",
+    "down",
+    "up",
+    "vertical",
+    "direction",
+    "opposite",
+    "offset",
+    "expand"
+  ],
+  "categories": ["arrows"]
+}

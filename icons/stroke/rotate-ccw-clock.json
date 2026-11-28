@@ -1,0 +1,17 @@
+{
+  "$schema": "../../icon.schema.json",
+  "contributors": ["agoscolantuoni"],
+  "tags": [
+    "rotate",
+    "counterclockwise",
+    "ccw",
+    "clock",
+    "history",
+    "undo",
+    "time",
+    "timeline",
+    "version",
+    "changelog"
+  ],
+  "categories": ["actions", "time"]
+}
