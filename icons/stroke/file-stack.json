@@ -1,0 +1,17 @@
+{
+  "$schema": "../../icon.schema.json",
+  "contributors": ["agoscolantuoni"],
+  "tags": [
+    "file",
+    "stack",
+    "documents",
+    "files",
+    "collection",
+    "layers",
+    "storage",
+    "versions",
+    "revisions",
+    "history"
+  ],
+  "categories": ["files", "layout"]
+}

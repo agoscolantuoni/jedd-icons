@@ -1,0 +1,21 @@
+{
+  "$schema": "../../icon.schema.json",
+  "contributors": ["agoscolantuoni"],
+  "tags": [
+    "scroll",
+    "text",
+    "parchment",
+    "paper",
+    "document",
+    "writing",
+    "manuscript",
+    "log",
+    "scripture",
+    "notes",
+    "list",
+    "script",
+    "story",
+    "changelog"
+  ],
+  "categories": ["files", "text"]
+}
